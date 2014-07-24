@@ -153,7 +153,7 @@ def job2():
     logger.info('Job2 Completed')
 
 schedule.every().day.at(JOB1_TIME).do(job1)
-schedule.every().day.at(JOB2_TIME).do(job2)
+#schedule.every().day.at(JOB2_TIME).do(job2)
 
 if __name__ == '__main__':
     # Create a logs direcory if not exist

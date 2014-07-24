@@ -81,4 +81,3 @@ def sendIntroMail():
         logger.info('Successfully sent the mail')
     except Exception as e:
         logger.exception("Failed to send mail")
-
