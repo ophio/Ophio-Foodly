@@ -16,15 +16,11 @@ JOB1_HOUR = 10
 JOB2_HOUR = 20
 
 # Sender/Reciever Details and Subject
-SUBJECT = 'Top Eatries of foodly'
 FROM = 'Ophio Foodly<foodly@ophio.co.in>'
 TO = ['delhi@ophio.co.in']
 
 # Logger Name
 LOGGER_NAME = 'foodly'
-
-# Log directory name
-LOG_DIR = 'logs'
 
 # App Log File name
 LOG_FILE_NAME = 'app.log'

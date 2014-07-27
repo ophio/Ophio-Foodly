@@ -22,7 +22,6 @@ from settings import JOB1_DAY_OF_WEEK
 from settings import JOB2_DAY_OF_WEEK
 from settings import JOB1_HOUR
 from settings import JOB2_HOUR
-from settings import LOG_DIR
 from settings import LOG_FILE_NAME
 from settings import LOGGER_NAME
 
@@ -144,7 +143,7 @@ def job2():
     result = getTopItems(result, TOP)
 
     # Save Result to file
-    filename = 'logs/' + getTodayDate() + '.log'
+    filename = os.getenv('LOG_DIR', 'logs') + '/' + getTodayDate() + '.log'
     with open(filename, 'w') as f:
         data = result
         if not data:
@@ -160,11 +159,11 @@ def job2():
 
 def run():
     # Create a logs direcory if not exist
-    if not os.path.exists(LOG_DIR):
-        os.makedirs(LOG_DIR)
+    if not os.path.exists(os.getenv('LOG_DIR', 'logs')):
+        os.makedirs(os.getenv('LOG_DIR', 'logs'))
 
     # Setup Logger
-    log_file = LOG_DIR + '/' + LOG_FILE_NAME
+    log_file = os.getenv('LOG_DIR', 'logs') + '/' + LOG_FILE_NAME
     setup_logger(LOGGER_NAME, log_file, level=logging.DEBUG)
 
     # Set Logger Object
