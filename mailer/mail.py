@@ -10,12 +10,11 @@ from email.mime.text import MIMEText
 from mako.template import Template
 
 from settings import LOGGER_NAME
-from settings import SUBJECT
 from settings import FROM
 from settings import TO
 
-SMTP_USER = os.getenv('sendgriduser', None)
-SMTP_PASSWORD = os.getenv('sendgridpass', None)
+SMTP_USER = os.getenv('SENDGRID_USER', None)
+SMTP_PASSWORD = os.getenv('SENDGRID_PASSWORD', None)
 
 def sendMail(data):
     # Set Logger Object
@@ -26,9 +25,9 @@ def sendMail(data):
         # multipart/alternative.
         msg = MIMEMultipart('alternative')
 
-        msg['Subject'] = SUBJECT
+        msg['Subject'] = 'Top Eatries of Ophio Foodly'
         msg['From'] = FROM
-        msg['To'] = TO
+        msg['To'] = ','.join(TO)
 
         # Create the body of the message (an HTML version).
         mytemplate = Template(filename='mailer/template.html')
@@ -58,7 +57,7 @@ def sendIntroMail():
         # multipart/alternative.
         msg = MIMEMultipart('alternative')
 
-        msg['Subject'] = SUBJECT
+        msg['Subject'] = 'Welcome in Ophio Foodly'
         msg['From'] = FROM
         msg['To'] = ','.join(TO)
 
@@ -80,5 +79,4 @@ def sendIntroMail():
         server.quit()
         logger.info('Successfully sent the mail')
     except Exception as e:
-        logger.exception("Failed to send mail")
-
+        logger.exception("Failed to send intro mail")
