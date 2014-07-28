@@ -20,8 +20,10 @@ from settings import FIREBASE_URL
 from settings import TOP
 from settings import JOB1_DAY_OF_WEEK
 from settings import JOB2_DAY_OF_WEEK
+from settings import JOB3_DAY_OF_WEEK
 from settings import JOB1_HOUR
 from settings import JOB2_HOUR
+from settings import JOB3_HOUR
 from settings import LOG_FILE_NAME
 from settings import LOGGER_NAME
 
@@ -139,6 +141,7 @@ def job2():
     # Get items by category
     result = getItemsByCategory(items, votes)
 
+
     # Get top items
     result = getTopItems(result, TOP)
 
@@ -153,9 +156,28 @@ def job2():
     # Send mail to users
     if result:
         sendMail(result)
-    else:
-        logger.info('No data so No mail for today')
-    logger.info('Job-2 Completed')
+    logger.info('Job2 Completed')
+
+
+# JOB to create daily Items stats
+def job3():
+
+    # Store the results
+    result = {}
+
+    # Get Items
+    items = fetchItems()
+
+    # Get Votes
+    votes = fetchVotes()
+
+    # Get items by category
+    result = getItemsByCategory(items, votes)
+    todayDate = getTodayDate()
+
+    res = FIRE_BASE.put('/dailyStats', todayDate, result)
+
+
 
 def run():
     # Create a logs direcory if not exist
@@ -178,6 +200,7 @@ def run():
         # Add jobs
         sched.add_cron_job(job1, day_of_week=JOB1_DAY_OF_WEEK, hour=JOB1_HOUR)
         # sched.add_cron_job(job2, day_of_week=JOB2_DAY_OF_WEEK, hour=JOB2_HOUR)
+        sched.add_cron_job(job3, day_of_week=JOB3_DAY_OF_WEEK, hour=JOB3_HOUR)
 
         while True:
             pass
